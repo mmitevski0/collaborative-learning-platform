@@ -6,12 +6,14 @@ import Welcome from './components/Welcome';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Navigation from './components/Navigation';
+import ChatDetails from './components/chat-details/ChatDetails';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+      <ChatDetails></ChatDetails>
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
