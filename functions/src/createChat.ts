@@ -1,10 +1,8 @@
-import { getFirestore } from 'firebase-admin/firestore';
 import { onRequest } from 'firebase-functions/v2/https';
 import cors from 'cors';
-import { FieldVal } from './firebaseAdmin';  // use helper exports
+import { FieldValue } from 'firebase-admin/firestore';
+import { db } from './firebaseAdmin';
 
-
-const db = getFirestore();
 
 // Re-usable CORS handler. // TODO: Add prod domain.
 const corsHandler = cors({
@@ -46,7 +44,7 @@ export const createChat = onRequest(
                 participants,
                 description,
                 metadata,
-                createdAt: FieldVal.serverTimestamp(),
+                createdAt: FieldValue.serverTimestamp(),
             });
             res.status(201).json({ chatId: docRef.id });
         } catch (err) {
