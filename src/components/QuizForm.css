@@ -7,6 +7,14 @@
     max-width: 500px;
     margin: 0 auto;
   }
+
+  button:focus {
+    outline: none;
+  }
+
+  input:focus {
+    outline: none;
+  }
   
   .quiz-form-title {
     color: #7886C7;
@@ -33,7 +41,7 @@
     border-radius: 4px;
     appearance: none;
     background-color: #fff;
-    color: #333;
+    color: #111;
     font-weight: bold;
     font-size: 13px;
   }
@@ -59,7 +67,7 @@
     display: block;
     font-weight: bold;
     font-size: 13px;
-    color: #333;
+    color: #111;
     cursor: pointer;
   }
   

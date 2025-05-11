@@ -3,6 +3,14 @@
     min-height: 100vh;
     background-color: white;
   }
+
+  button:focus {
+    outline: none;
+  }
+
+  input:focus {
+    outline: none;
+  }
   
   .top-nav {
     display: flex;
@@ -42,7 +50,7 @@
     font-size: 1.3rem;
     font-weight: 600;
     padding: 6px 30px 30px 30px;
-    color: #333;
+    color: #111;
     border-bottom: 1px solid #ddd;
   }
   
@@ -66,7 +74,7 @@
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 12px;
-    color: #333;
+    color: #111;
   }
   
   .question-text {

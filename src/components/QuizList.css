@@ -8,6 +8,14 @@
     padding-bottom: 50px;
     background-color: white;
   }
+
+  button:focus {
+    outline: none;
+  }
+
+  input:focus {
+    outline: none;
+  }
   
   .quiz-list-header {
     display: flex;
@@ -19,7 +27,7 @@
   .quiz-list-title {
     font-size: 20px;
     font-weight: bold;
-    color: #333;
+    color: #111;
     margin: 0;
   }
   
@@ -44,7 +52,7 @@
     padding: 2px 14px;
     margin-right: 25px;
     background-color: #fff;
-    color: #333;
+    color: #111;
     border: 1px solid #ddd;
     border-radius: 6px;
     cursor: pointer;
@@ -71,7 +79,7 @@
     grid-template-columns: 100px 1fr;
     padding-bottom: 15px;
     font-weight: 600;
-    color: #333;
+    color: #111;
     font-size: 0.9rem;
     border-bottom: 1px solid #ddd;
   }
@@ -127,7 +135,7 @@
   
   .quiz-item-subject {
     font-weight: 600;
-    color: #333;
+    color: #111;
     margin-left: -35px;
   }
   
@@ -152,13 +160,13 @@
   .quiz-name {
     font-weight: 600;
     font-size: 0.85rem;
-    color: #333;
+    color: #111;
   }
   
   .take-quiz-button {
     border: 1px solid #ddd;
     background-color: #fff;
-    color: #333;
+    color: #111;
     font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
