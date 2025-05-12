@@ -1,88 +1,66 @@
 import React from "react";
+import { GoogleLogin } from "@react-oauth/google";
 
-const Login: React.FC = () => {
+const SignUp: React.FC = () => {
+  const handleGoogleSuccess = (credentialResponse: any) => {
+    // Example: decode token or send it to your backend
+    // const decoded = jwt_decode(credentialResponse.credential);
+    console.log("Google credential:", credentialResponse);
+  };
+
+  const handleGoogleError = () => {
+    console.error("Google SignUp Failed");
+  };
+
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-white">
-      {/* Background solid lines with different directions */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+    <div className="relative w-screen h-screen bg-white overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none -z-10">
         <svg
           className="w-full h-full"
-          viewBox="0 0 100 100"
+          viewBox="0 0 1440 320"
           preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          {/* First line with a different angle */}
-          <path
-            d="M0,100 C40,30 60,70 100,10"
-            stroke="#ccc"
-            strokeWidth="1"
-            fill="none"
-          />
-          {/* Second line with another angle */}
-          <path
-            d="M0,50 C40,90 80,10 100,50"
-            stroke="#ddd"
-            strokeWidth="1"
-            fill="none"
-          />
-          {/* Third line with another variation */}
-          <path
-            d="M0,80 C20,20 80,40 100,90"
-            stroke="#bbb"
-            strokeWidth="1"
-            fill="none"
-          />
+          <path d="M0,320 C480,120 960,220 1440,60" stroke="#ccc" strokeWidth="1" fill="none" />
+          <path d="M0,240 C400,180 1040,20 1440,100" stroke="#ddd" strokeWidth="1" fill="none" />
+          <path d="M0,200 C600,0 840,320 1440,240" stroke="#bbb" strokeWidth="1" fill="none" />
         </svg>
       </div>
 
-      {/* Login container */}
-      <div className="relative z-10 flex items-center justify-center h-full">
-        <div className="text-center max-w-md p-6 rounded-lg">
-          {/* Main Heading */}
-          <h1 className="text-5xl font-bold text-blue-500 mb-4 whitespace-nowrap">
-            School AI ChatBot
-          </h1>
-          {/* Subheading */}
-          <h2 className="text-xl font-semibold text-black mb-4">Welcome back</h2>
-          {/* Description */}
-          <p className="text-sm text-gray-600 mb-6">
-            Enter your email to log in for this app
-          </p>
-          {/* Email input */}
+      <div className="relative z-10 flex items-center justify-center h-full px-4">
+        <div className="w-full max-w-md bg-white/90 p-6 rounded-2xl shadow-xl text-center">
+          <h1 className="text-4xl font-extrabold text-blue-500 mb-3">School AI ChatBot</h1>
+          <h2 className="text-lg font-medium text-black mb-1">Create an account</h2>
+          <p className="text-sm text-gray-600 mb-6">Enter your email to sign up</p>
+
           <input
             type="email"
             placeholder="email@domain.com"
-            className="w-full p-3 border border-gray-300 rounded-xl mb-4"
+            className="w-full p-3 mb-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
-          {/* Continue button */}
-          <button className="w-full py-3 bg-black text-white rounded-xl mb-4 hover:bg-gray-800">
+
+          <button className="w-full py-3 mb-4 bg-black text-white rounded-xl hover:bg-gray-800 transition">
             Continue
           </button>
-          {/* Sign-up prompt */}
+
           <p className="text-sm text-gray-600 mb-4">
-            Don't have an account?{" "}
-            <a href="/signup" className="text-blue-500 hover:underline">
-              Sign up
+            Already have an account?{" "}
+            <a href="/login" className="text-blue-500 hover:underline">
+              Log in
             </a>
           </p>
-          {/* Or continue with */}
-          <p className="text-sm text-gray-600 mb-4">or continue with</p>
-          {/* Google button */}
-          <button className="w-full py-3 bg-gray-200 text-black rounded-xl flex items-center justify-center mb-4 hover:bg-gray-300">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google.png"
-              alt="Google Logo"
-              className="w-6 h-6 mr-3"
-            />
-            <span>Google</span>
-          </button>
-          {/* Terms of Service and Privacy Policy */}
-          <p className="text-xs text-gray-400">
-            Terms of Service | Privacy Policy
-          </p>
+
+          <p className="text-sm text-gray-600 mb-3">or continue with</p>
+
+          <div className="flex justify-center mb-5">
+            <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+          </div>
+
+          <p className="text-xs text-gray-400">Terms of Service | Privacy Policy</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;

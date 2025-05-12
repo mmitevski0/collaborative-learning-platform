@@ -1,0 +1,29 @@
+.sidebar {
+    width: 15%;
+    height: 100vh;
+    background-color: white;
+    border-right: 1px solid #e5e7eb;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    transition: all 0.2s ease-in-out;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+}

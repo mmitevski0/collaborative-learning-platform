@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import './QuizList.css';
+import QuizForm from '../quiz-form/QuizForm'; // Make sure the path is correct
+import './QuizPage.css';
 
-const QuizList: React.FC = () => {
+const QuizPage: React.FC = () => {
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
   const [searchQuery, setSearchQuery] = useState('');
+  const [showForm, setShowForm] = useState(false);
 
   const quizzes = [
     { id: '1', code: "Усил", date: "Dec 5", subject: "Управување со ИКТ проекти", quizzes: ["Quizz 2", "Quizz 1"] },
@@ -32,7 +34,7 @@ const QuizList: React.FC = () => {
     <div className="quiz-list-container">
       <div className="quiz-list-header">
         <h1 className="quiz-list-title">Quiz Generator</h1>
-        <button className="header-button">New Quiz</button>
+        <button className="header-button" onClick={() => setShowForm(true)}>New Quiz</button>
       </div>
 
       <input
@@ -76,8 +78,17 @@ const QuizList: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {showForm && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-modal" onClick={() => setShowForm(false)}>✖</button>
+            <QuizForm />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default QuizList;
+export default QuizPage;

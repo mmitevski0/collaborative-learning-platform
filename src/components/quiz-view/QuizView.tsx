@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import quizData from '../data/sampleQuiz.json';
+import quizData from '../../data/sampleQuiz.json';
 import './QuizView.css';
 
 interface QuizAnswer {
@@ -17,15 +17,7 @@ const QuizView: React.FC = () => {
   };
 
   return (
-    <div className="quiz-view-container">
-      <div className="top-nav">
-        <h1 className="nav-title">School AI ChatBot</h1>
-        <nav className="nav-links">
-          <a href="#" className="nav-item">Home</a>
-          <a href="#" className="nav-item">Chats</a>
-          <a href="#" className="nav-item">Quiz Generator</a>
-        </nav>
-      </div>
+    <div className="quiz-view-container">                    
 
       <h2 className="quiz-title">{quizData.title}</h2>
 

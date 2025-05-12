@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import './ChatWindow.css';
-import EmojiIcon from './../assets/icons/smile.svg';
-import ImageIcon from './../assets/icons/image.svg';
+import EmojiIcon from "../../assets/icons/smile.svg"
+import ImageIcon from '../../assets/icons/image.svg';
 
 const ChatWindow: React.FC = () => {
   const [messages, setMessages] = useState([
-    { 
+    {
       id: '1',
       sender: 'bot',
       text: 'Hello, how can I help you today?',
@@ -45,7 +45,7 @@ const ChatWindow: React.FC = () => {
           minute: '2-digit'
         })
       };
-      
+
       setMessages([...messages, newMsg]);
       setNewMessage('');
     }
@@ -59,7 +59,7 @@ const ChatWindow: React.FC = () => {
             <div className="chat-timestamp">
               {messages[0].timestamp}
             </div>
-            
+
             {messages.map(message => (
               <div key={message.id} className={`message-container ${message.sender}`}>
                 <div className={`message ${message.sender}`}>
@@ -73,7 +73,7 @@ const ChatWindow: React.FC = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="message-input-container">
           <input
             type="text"
