@@ -8,6 +8,9 @@ import SignUp from './components/SignUp';
 import Navigation from './components/Navigation';
 import ChatHistory from './components/ChatHistory';
 import ChatWindow from './components/ChatWindow';
+import ChatList from './components/chat/chat-list/ChatList';
+import QuizDetails from './components/guiz/guiz-details/QuizDetails';
+import QuizList from './components/guiz/quiz-list/QuizList';
 
 function App() {
   return (
