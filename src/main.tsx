@@ -9,7 +9,7 @@ import { AuthProvider } from './components/Login.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId="300306070211-b0oglignefekdv219bg0qdijo2p5ifmo.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="KEY_HERE">
       <AuthProvider>
         <App />
       </AuthProvider>
