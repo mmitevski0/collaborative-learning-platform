@@ -1,16 +1,74 @@
 import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
+import { createContext, useContext, useState, useEffect } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
+
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  picture?: string;
+}
+
+interface AuthContextType {
+  user: User | null;
+  setUser: (user: User | null) => void;
+}
+
+const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<User | null>(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
+
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 const SignUp: React.FC = () => {
-  const handleGoogleSuccess = (credentialResponse: any) => {
-    // Example: decode token or send it to your backend
-    // const decoded = jwt_decode(credentialResponse.credential);
-    console.log("Google credential:", credentialResponse);
-  };
+    const { setUser } = useAuth();
 
-  const handleGoogleError = () => {
-    console.error("Google SignUp Failed");
-  };
+const login = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${response.access_token}` },
+        }).then(res => res.json());
+
+        const userData = {
+          id: userInfo.sub,
+          email: userInfo.email,
+          name: userInfo.name,
+          picture: userInfo.picture
+        };
+
+        setUser(userData);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    },
+    onError: () => console.log('Login Failed'),
+  });
 
   return (
     <div className="relative w-screen h-screen bg-white overflow-hidden">
@@ -53,7 +111,14 @@ const SignUp: React.FC = () => {
           <p className="text-sm text-gray-600 mb-3">or continue with</p>
 
           <div className="flex justify-center mb-5">
-            <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+            <button
+              type="button"
+              onClick={() => login()}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-xl shadow hover:bg-gray-100 transition"
+            >
+              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" className="w-5 h-5" />
+              Continue with Google
+            </button>
           </div>
 
           <p className="text-xs text-gray-400">Terms of Service | Privacy Policy</p>

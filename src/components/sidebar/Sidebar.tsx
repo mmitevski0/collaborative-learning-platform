@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './Sidebar.css';
 import { NavLink } from "react-router-dom";
 import { Home, Search, List, FileText, Smile } from 'lucide-react'; // Icons
 
+interface UserData {
+  name: string;
+  picture: string;
+}
+
 const Sidebar: React.FC = () => {
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem('user');
+    if (userDataString) {
+      const parsedData = JSON.parse(userDataString);
+      setUserData({
+        name: parsedData.name,
+        picture: parsedData.picture
+      });
+    }
+  }, []);
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
   return (
     <aside className="sidebar">
       <div className="p-6 w-[85%]">
         <h1 className="text-xl  text-indigo-600 mb-8"><b>School AI ChatBot</b></h1>
-
+        <div className="displayUserLogged">
+          <span className="text-gray-700">Hello, {userData.name}</span>
+          <img
+            src={userData?.picture}
+            alt="Profile"
+            className="w-10 h-10 rounded-full"
+          />
+        </div>
         <div className="mt-5 ml-2 text-xl font-bold text-gray-500"><h5>Discover</h5></div>
         <ul className="space-y-4 text-sm mt-3 mb-5">
           <li>

@@ -27,3 +27,16 @@
         position: relative;
     }
 }
+
+.displayUserLogged{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.displayUserLogged img {
+    width: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+}

@@ -1,0 +1,1 @@
+export const AI_PROMPT = 'Act like a normal chat directly to you. You are a helpful assistant. Answer the questions as best as you can. If you don\'t know the answer, say "Sorry, I don\'t know".';

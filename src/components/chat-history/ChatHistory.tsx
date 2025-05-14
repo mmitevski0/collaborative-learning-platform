@@ -1,30 +1,122 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ChatHistory.css';
+import { collection, query, orderBy, getDocs, where } from "firebase/firestore";
+import { db } from '../../firebase';
+import { useAuth } from '../Login';
+import { formatDistanceToNow } from 'date-fns';
 
-interface ChatItem {
+export interface ChatMessage {
+  id: string;
+  text: string;
+  timestamp: any;
+  sender: 'user' | 'bot';
+  userId: string;
+  chatId?: string;
+}
+
+interface ChatHistoryProps {
+  messages: ChatMessage[];
+  setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
+  currentChatId: string;
+  setCurrentChatId: React.Dispatch<React.SetStateAction<string>>;
+}
+interface ChatGroup {
   id: string;
   date: string;
   title: string;
-  preview: string;
+  messages: ChatMessage[];
+  firstMessage: ChatMessage;
 }
 
-const ChatHistory: React.FC = () => {
-  const [chats, setChats] = useState<ChatItem[]>([
-    { id: '1', date: '13 Apr', title: 'Software Frameworks', preview: '' },
-    { id: '2', date: '13 Apr', title: 'Butterfly Animation CSS', preview: '' },
-    { id: '3', date: '11 Apr', title: 'Responsive behavior doesn\'t work on mobile devices', preview: '' },
-    { id: '4', date: '2 Apr', title: 'Confirmation states not rendering properly in dark mode', preview: '' },
-    { id: '5', date: '11 Mar', title: 'Text wrapping is awkward on older browsers', preview: '' },
-    { id: '6', date: '8 Mar', title: 'Revise copy on About page', preview: '' },
-    { id: '7', date: '1 Mar', title: 'TypeScript vs Javascript', preview: '' },
-    { id: '8', date: '1 Mar', title: 'JavaScript', preview: '' },
-    { id: '9', date: '8 Feb', title: 'Accessibility focused state for input fields', preview: '' },
-    { id: '10', date: '7 Jan', title: 'Header IA revision to support additional navigation items', preview: '' },
-    { id: '11', date: '2024', title: 'GIFs flicker when looping back making the animation look choppy', preview: '' },
-  ]);
-
+const ChatHistory: React.FC<ChatHistoryProps> = ({
+  messages,
+  setMessages,
+  currentChatId,
+  setCurrentChatId
+}) => {
+  const { user } = useAuth();
+  const [chats, setChats] = useState<ChatGroup[]>([]);
   const [activeChat, setActiveChat] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState('');
+  const [isInitialState, setIsInitialState] = useState(true);
+
+  useEffect(() => {
+    if (user?.id) {
+      fetchUserChats(user.id);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const loadActiveChat = async () => {
+      if (currentChatId && currentChatId !== 'new') {
+        const q = query(
+          collection(db, "messages"),
+          where("chatId", "==", currentChatId),
+          orderBy("timestamp", "asc")
+        );
+
+        const querySnapshot = await getDocs(q);
+        const loadedMessages = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as ChatMessage[];
+
+        setMessages(loadedMessages);
+      }
+    };
+
+    loadActiveChat();
+  }, [currentChatId]);
+
+  const startNewChat = () => {
+    const newChatId = Date.now().toString();
+    localStorage.setItem('currentChatId', newChatId);
+    setCurrentChatId(newChatId);
+    setMessages([]);
+    setNewMessage('');
+    setActiveChat(null);
+    setIsInitialState(true);
+  };
+  const fetchUserChats = async (userId: string) => {
+    try {
+      const q = query(
+        collection(db, "messages"),
+        where("userId", "==", userId),
+        orderBy("timestamp", "desc")
+      );
+
+      const querySnapshot = await getDocs(q);
+      const messages = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as ChatMessage[];
+
+      const groupedMessages = messages.reduce((acc, message) => {
+        const chatKey = message.chatId || 'default';
+
+        if (!acc[chatKey]) {
+          const firstMsg = message;
+          acc[chatKey] = {
+            id: chatKey,
+            date: formatDistanceToNow(
+              message.timestamp?.toDate?.() ||
+              new Date(message.timestamp) || new Date(), { addSuffix: true }),
+            messages: [],
+            firstMessage: firstMsg,
+            title: firstMsg.sender === 'user' ? firstMsg.text : 'AI Chat'
+          };
+        }
+        acc[chatKey].messages.push(message);
+        return acc;
+      }, {} as Record<string, ChatGroup>);
+
+      setChats(Object.values(groupedMessages));
+    } catch (error) {
+      console.error("Error fetching chats:", error);
+    }
+  };
 
   const filteredChats = chats.filter(chat =>
     chat.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -34,35 +126,55 @@ const ChatHistory: React.FC = () => {
     <div className="chat-history">
       <div className="history-header">
         <h1 className="history-title">Chats</h1>
-        <button className="new-chat-button">New Chat</button>
+        <button className="new-chat-button" onClick={startNewChat}>New Chat</button>
       </div>
-      
+
       <input
         className="search-input"
         placeholder="Search..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      
+
       <div className="column-headers">
         <span className="date-header">Date</span>
         <span className="title-header">Title</span>
       </div>
-      
+
       <div className="chats-list">
         {filteredChats.map(chat => (
           <div key={chat.id} className="chat-item-container">
             <button
               className={`chat-item ${activeChat === chat.id ? 'active' : ''}`}
-              onClick={() => setActiveChat(chat.id)}
+              onClick={() => {
+                setActiveChat(chat.id);
+                setCurrentChatId(chat.id);
+                localStorage.setItem('currentChatId', chat.id);
+                setMessages(chat.messages);
+              }}
             >
               <div className="chat-dots">···</div>
               <span className="chat-date">{chat.date}</span>
-              <span className="chat-title">{chat.title}</span>
+              <span className="chat-title">
+                {chat.firstMessage.text.length > 30
+                  ? chat.firstMessage.text.substring(0, 30) + '...'
+                  : chat.firstMessage.text}
+              </span>
             </button>
             <div className="chat-divider"></div>
           </div>
         ))}
+        {loading && (
+          <div className="message-container bot">
+            <div className="message bot">
+              <div className="message-text">
+                <div className="loading-dots">
+                  <div></div><div></div><div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
