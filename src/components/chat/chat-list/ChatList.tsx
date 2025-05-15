@@ -1,63 +1,83 @@
-import ChatDetails, { ChatDetailsProps } from "../chat-details/ChatDetails"
+import React, { useEffect, useState } from 'react';
+import ChatDetails, { ChatDetailsProps } from "../chat-details/ChatDetails";
+import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { db } from '../../../firebase';
+import { useAuth } from '../../Login';
+import { NavLink } from 'react-router-dom';
 
 const ChatList: React.FC = () => {
-    // placeholder chat
-    const chats: ChatDetailsProps[] = [
-        {
-            chat: {
-                name: 'Some Random Conversation',
-                messages: [
-                    { text: 'Hi! How are you?', time: '10:00', isOutgoing: false },
-                    { text: "I'm good, thanks!", time: '10:01', isOutgoing: true }
-                ]
+    const { user } = useAuth();
+    const [chats, setChats] = useState<ChatDetailsProps[]>([]);
+
+    useEffect(() => {
+        const fetchChats = async () => {
+            if (!user?.id) {
+                console.warn("User ID not available yet.");
+                return <div>Start a chat</div>;
             }
-        },
-        {
-            chat: {
-                name: 'Jane Smith',
-                messages: [
-                    { text: 'Hey, what’s up?', time: '09:00', isOutgoing: false },
-                    { text: 'Not much, just working!', time: '09:05', isOutgoing: true }
-                ]
+
+            try {
+                const q = query(
+                    collection(db, "messages"),
+                    where("userId", "==", user.id)
+                    // orderBy("timestamp", "asc")
+                );
+                const snapshot = await getDocs(q);
+                const messages = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                console.log("Fetched messages from Firebase:", messages);
+
+                const grouped = messages.reduce((acc, message: any) => {
+                    const chatId = message.chatId || 'default';
+
+                    if (!acc[chatId]) {
+                        acc[chatId] = {
+                            name: message.sender === 'user' ? message.text : 'AI Chat',
+                            messages: []
+                        };
+                    }
+
+                    acc[chatId].messages.push({
+                        text: message.text,
+                        time: new Date(message.timestamp?.toDate?.() || message.timestamp).toLocaleTimeString(),
+                        isOutgoing: message.sender === 'user'
+                    });
+
+                    return acc;
+                }, {} as Record<string, ChatDetailsProps['chat']>);
+
+                const finalChats = Object.values(grouped).map(chat => ({ chat }));
+                console.log("Grouped chats:", finalChats);
+
+                setChats(finalChats);
+
+            } catch (err) {
+                console.error('Error loading chats:', err);
             }
-        },
-        {
-            chat: {
-                name: 'Jane Smith',
-                messages: [
-                    { text: 'Hey, what’s up?', time: '09:00', isOutgoing: false },
-                    { text: 'Not much, just working!', time: '09:05', isOutgoing: true }
-                ]
-            }
-        },
-        {
-            chat: {
-                name: 'Jane Smith',
-                messages: [
-                    { text: 'Hey', time: '09:05', isOutgoing: true },
-                    { text: 'Hi again! Just checking in - everything okay? You still need help with homework?', time: '09:00', isOutgoing: false },
-                    { text: 'Hey', time: '09:05', isOutgoing: true },
-                    { text: 'Hi again! Just checking in - everything okay? You still need help with homework?', time: '09:00', isOutgoing: false },
-                    { text: 'Hey', time: '09:05', isOutgoing: true },
-                ]
-            }
-        }
-    ];
+        };
+
+        fetchChats();
+    }, [user]);
+
     return (
-        <div className="container">
-            <div style={{ padding: '20px 0'}} className="d-flex justify-content-between align-items-center">
-                <h3 style={{ textAlign: 'left'}}>Chats</h3>
-                <button className="btn btn-primary">New chat</button>
+        <div className="container  my-5 ">
+            <div style={{ padding: '25px 0' }} className="d-flex justify-content-between align-items-center">
+                <h1 style={{ textAlign: 'left' }}>Chats</h1>
+                <button className="btn btn-primary text-white"> <NavLink to="/home/chats" >
+                    New chat</NavLink></button>
             </div>
             <div className="d-flex justify-content-center" style={{ flexDirection: 'column' }}>
-                <div style={{display: 'flex', gap: '20px', padding: '0'}}>
-                    {chats.map((chat, index) => (
-                        <ChatDetails key={index} chat={chat.chat} />
+                <div style={{ display: 'flex', gap: '20px', padding: '0', flexWrap: 'wrap' }}>
+                    {chats.map((chatData, index) => (
+                        <ChatDetails key={index} chat={chatData.chat} />
                     ))}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ChatList
+export default ChatList;

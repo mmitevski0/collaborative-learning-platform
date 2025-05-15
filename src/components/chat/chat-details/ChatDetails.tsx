@@ -10,52 +10,68 @@ export interface ChatDetailsProps {
     chat: {
         name: string;
         messages: ChatMessage[];
-    }
+    };
+    onClick?: () => void; // To handle navigation when card is clicked
 }
 
-const ChatDetails: React.FC<ChatDetailsProps> = ({ chat }) => {
+const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, onClick }) => {
+    const visibleMessages = chat.messages.slice(-3); // Last 3 messages
+
     return (
-        <section>
-            <div className="container">
-                <div className="row d-flex justify-content-center">
-                    <div style={{padding: '0'}}>
-                        <div className="card shadow-lg border-0" style={{ padding: '0px', height: '350px', width: '300px' }}>
+        <div>
+            <div
+                className="card shadow-sm border rounded-3 m-2"
+                onClick={onClick}
+                style={{
+                    height: '18rem',
+                    width: '280px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '7px',
+                    backgroundColor: '#fff',
+                    transition: 'box-shadow 0.2s ease-in-out',
+                }}
+            >
 
-                            <div
-                                className="card-body"
-                                style={{ overflowY: 'auto', paddingLeft: '0', paddingRight: '0', fontSize: '15px', textAlign: 'initial', marginBottom: '0' }}
+
+                <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {visibleMessages.map((message, index) => (
+                        <div
+                            key={index}
+                            className={`d-flex ${message.isOutgoing ? 'justify-content-end' : 'justify-content-start'}`}
+                        >
+                            <span
+                                className={`p-2 rounded ${message.isOutgoing ? 'bg-primary text-white' : 'bg-light text-dark'
+                                    }`}
+                                style={{ fontSize: '12px', maxWidth: '80%' }}
                             >
-                                {chat.messages.map((message, index) => (
-                                    <div
-                                        key={index}
-                                        className={`d-flex flex-row ${message.isOutgoing ? 'justify-content-end' : 'justify-content-start'}`}
-                                    >
-                                        <div>
-                                            <p
-                                                className={`small p-2 ${message.isOutgoing ? 'me-3 text-white rounded bg-primary' : 'ms-3 rounded bg-light'}`}
-                                            >
-                                                {message.text}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="card-footer d-flex align-items-center p-3">
-                                <input
-                                    type="text"
-                                    className="form-control form-control-lg mx-2"
-                                    placeholder="Type your message"
-                                    style={{fontSize: '12px'}}
-                                />
-                                <button className="btn btn-primary" style={{fontSize: '12px'}}>Send</button>
-                            </div>
+                                {message.text}
+                            </span>
                         </div>
-                    </div>
+                    ))}
                 </div>
+
+                <div className="text-end mt-2" style={{ fontSize: '18px', color: '#ccc' }}>
+                    <span>↗</span>
+                </div>
+
             </div>
-        </section>
-    )
+            <h5
+                className="text-truncate"
+                style={{
+
+                    fontWeight: 600,
+                    fontSize: '20px',
+                    marginBottom: '8px',
+                    paddingLeft: '18px',
+
+                }}
+            >
+                {chat.name}
+            </h5>
+        </div>
+    );
 };
 
-export default ChatDetails
+export default ChatDetails;
