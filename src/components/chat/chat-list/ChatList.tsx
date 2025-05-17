@@ -9,12 +9,14 @@ import "./ChatList.css";
 const ChatList: React.FC = () => {
     const { user } = useAuth();
     const [chats, setChats] = useState<ChatDetailsProps[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchChats = async () => {
             if (!user?.id) {
                 console.warn("User ID not available yet.");
-                return <div>Start a chat</div>;
+                setLoading(false);
+                return;
             }
 
             try {
@@ -57,11 +59,17 @@ const ChatList: React.FC = () => {
 
             } catch (err) {
                 console.error('Error loading chats:', err);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchChats();
     }, [user]);
+
+    if (loading) {
+        return <div className="chatlist-container">Loading...</div>;
+    }
 
     return (
         <div className="chatlist-container">
@@ -72,9 +80,18 @@ const ChatList: React.FC = () => {
                 </NavLink>
             </div>
             <div className="chatlist-grid">
-                {chats.map((chatData, index) => (
-                    <ChatDetails key={index} chat={chatData.chat} />
-                ))}
+                {chats.length > 0 ? (
+                    chats.map((chatData, index) => (
+                        <ChatDetails key={index} chat={chatData.chat} />
+                    ))
+                ) : (
+                    <div className="chatlist-empty-state">
+                        You don't have any saved chats. {' '}
+                        <NavLink to="/home/chats" className="chatlist-empty-link">
+                            Start a new chat
+                        </NavLink>
+                    </div>
+                )}
             </div>
         </div>
     );

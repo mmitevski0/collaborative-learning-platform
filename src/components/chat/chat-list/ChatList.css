@@ -1,6 +1,6 @@
 .chatlist-container {
     padding: 3rem 0;
-    width: 1150;
+    width: 1150px;
     max-width: 1150px;
     margin: 0 auto;
 }
@@ -42,4 +42,23 @@
     padding: 0;
     flex-wrap: wrap;
     justify-content: flex-start;
+}
+
+.chatlist-empty-state {
+    width: 100%;
+    text-align: left;
+    padding: 2rem 0;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.chatlist-empty-link {
+    color: #7886C7;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.chatlist-empty-link:hover {
+    color: #3b82f6;
 }
