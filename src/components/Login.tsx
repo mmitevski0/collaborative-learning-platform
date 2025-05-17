@@ -1,8 +1,9 @@
 import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import "./SignUp.css";
+import { useNavigate } from 'react-router-dom';
+
 
 interface User {
   id: string;
@@ -47,9 +48,10 @@ export const useAuth = () => {
 };
 
 const SignUp: React.FC = () => {
-    const { setUser } = useAuth();
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
 
-const login = useGoogleLogin({
+  const login = useGoogleLogin({
     onSuccess: async (response) => {
       try {
         const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
@@ -64,6 +66,8 @@ const login = useGoogleLogin({
         };
 
         setUser(userData);
+        navigate('/home');
+
       } catch (error) {
         console.error('Error fetching user info:', error);
       }
@@ -109,10 +113,10 @@ const login = useGoogleLogin({
 
           <p className="signup-divider">or continue with</p>
 
-          <button 
-              type="button"
-              onClick={() => login()}
-              className="signup-google-button">
+          <button
+            type="button"
+            onClick={() => login()}
+            className="signup-google-button">
             <img
               src="https://www.google.com/favicon.ico"
               alt="Google"

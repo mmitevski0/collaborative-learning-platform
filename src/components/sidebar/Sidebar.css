@@ -16,6 +16,9 @@
 .Sidebar-content {
     padding: 1rem 0 1rem 0.8rem;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .Sidebar-title {
@@ -52,13 +55,15 @@
     color: #111;
 }
 
-.Sidebar-navList, .Sidebar-libraryList {
+.Sidebar-navList,
+.Sidebar-libraryList {
     margin-bottom: 3rem;
     list-style-type: none;
     padding: 0;
 }
 
-.Sidebar-navItem, .Sidebar-libraryItem {
+.Sidebar-navItem,
+.Sidebar-libraryItem {
     transition: all 0.2s ease-in-out;
     margin-bottom: -10px;
     padding: 10px 0;
@@ -90,6 +95,13 @@
     background-color: #f0f0f0;
     font-weight: 600;
 }
+
+.Sidebar-logout {
+    font-weight: 700;
+    margin: 10px;
+    margin-top: 189px;
+}
+
 
 .Sidebar-icon {
     margin-right: 20px;

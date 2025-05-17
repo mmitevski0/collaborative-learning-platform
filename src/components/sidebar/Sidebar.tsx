@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import './Sidebar.css';
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Search, List, FileText, Smile } from 'lucide-react';
+import { Home, Search, List, FileText, Smile, LogOut } from 'lucide-react';
 
 interface UserData {
   name: string;
   picture: string;
+}
+declare global {
+  interface Window {
+    google: any;
+  }
 }
 
 const Sidebar: React.FC = () => {
@@ -38,7 +43,7 @@ const Sidebar: React.FC = () => {
           <span>Hello, {userData.name}</span>
           <img src={userData?.picture} alt="Profile" />
         </div>
-        
+
         <div className="Sidebar-sectionTitle">Discover</div>
         <div className="Sidebar-navList">
           <div className="Sidebar-navItem">
@@ -84,6 +89,23 @@ const Sidebar: React.FC = () => {
               Favorites
             </button>
           </div>
+        </div>
+        <div className="Sidebar-logout">
+          <button
+            onClick={() => {
+              localStorage.removeItem('user');
+
+              if (window.google) {
+                window.google.accounts.id.disableAutoSelect();
+              }
+
+              navigate('/');
+            }}
+            className="Sidebar-navLink"
+          >
+            <LogOut className="Sidebar-icon" />
+            <b>Logout</b>
+          </button>
         </div>
       </div>
     </aside>
