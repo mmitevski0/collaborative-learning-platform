@@ -12,7 +12,6 @@ const QuizForm: React.FC = () => {
             placeholder="Enter subject name"
             name="Subject"
           />
-          <div className="dropdown-arrow">▼</div>
         </div>
         <div className="quiz-form-file-container">
           <label className="quiz-form-file-label">

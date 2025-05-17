@@ -1,0 +1,129 @@
+.signup-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 1rem;
+  margin-top: -8rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 28rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.signup-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #7886C7;
+  margin-bottom: 1.5rem;
+}
+
+.signup-subtitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
+
+.signup-description {
+  font-size: 16px;
+  font-weight: 400;
+  color: #111;
+  margin-bottom: 1.5rem;
+}
+
+.signup-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+}
+
+.signup-input:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.signup-button:hover {
+  background-color: #333;
+}
+
+.signup-login-link {
+  font-size: 16px;
+  font-weight: 400px;
+  color: #111;
+  margin-bottom: 1.5rem;
+}
+
+.signup-login-link a {
+  color: #7886C7;
+  text-decoration: none;
+}
+
+.signup-login-link a:hover {
+  color: #3b82f6;
+}
+
+.signup-divider {
+  font-size: 16px;
+  font-weight: 400px;
+  color: #828282;
+  margin-bottom: 1rem;
+}
+
+.signup-google-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 1.25rem;
+  background-color: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.signup-google-button:hover {
+  background-color: #ddd;
+}
+
+.signup-google-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.signup-google-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111;
+}
+
+.signup-footer {
+  font-size: 16px;
+  font-weight: 400;
+  color: #7886C7;
+}

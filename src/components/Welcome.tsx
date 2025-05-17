@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Welcome.css";
 
 const Welcome: React.FC = () => {
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-white">
+    <div className="relative w-screen h-screen overflow-hidden bg-white font-sans">
       <div className="absolute inset-0 -z-10">
         <svg
           className="w-full h-full"
@@ -32,31 +33,21 @@ const Welcome: React.FC = () => {
         </svg>
       </div>
 
-      <div className="relative z-10 flex items-center justify-center h-full px-4">
-        <div className="text-center max-w-md w-full">
-          <h1 className="text-5xl font-bold text-blue-500 mb-8 leading-tight">
-            School AI<br />ChatBot
-          </h1>
-          <div className="flex justify-center space-x-4 mb-4">
+      <div className="welcome-container">
+        <div className="welcome-content">
+          <h1 className="welcome-title">School AI<br />ChatBot</h1>
+          <div className="welcome-button-group">
             <Link to="/login">
-              <button className="bg-black text-white py-2 px-8 rounded hover:bg-gray-800">
-                Log In
-              </button>
+              <button className="welcome-button">Log In</button>
             </Link>
             <Link to="signup">
-              <button className="bg-black text-white py-2 px-6 rounded hover:bg-gray-800">
-                Sign Up
-              </button>
+              <button className="welcome-button welcome-signup-button">Sign Up</button>
             </Link>
           </div>
-          <div className="flex justify-center mb-4">
-            <button className="bg-white text-gray-500 py-1 px-4 rounded hover:bg-gray-100">
-              Try it First
-            </button>
+          <div className="welcome-button-group">
+            <button className="welcome-try-button">Try it First</button>
           </div>
-          <p className="text-sm text-gray-400 mt-6">
-            Terms of Service | Privacy Policy
-          </p>
+          <p className="welcome-footer">Terms of Service | Privacy Policy</p>
         </div>
       </div>
     </div>

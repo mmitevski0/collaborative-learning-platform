@@ -2,6 +2,7 @@ import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
+import "./SignUp.css";
 
 interface User {
   id: string;
@@ -85,43 +86,42 @@ const login = useGoogleLogin({
         </svg>
       </div>
 
-      <div className="relative z-10 flex items-center justify-center h-full px-4">
-        <div className="w-full max-w-md bg-white/90 p-6 rounded-2xl shadow-xl text-center">
-          <h1 className="text-4xl font-extrabold text-blue-500 mb-3">School AI ChatBot</h1>
-          <h2 className="text-lg font-medium text-black mb-1">Create an account</h2>
-          <p className="text-sm text-gray-600 mb-6">Enter your email to sign up</p>
+      <div className="signup-container">
+        <div className="signup-card">
+          <h1 className="signup-title">School AI ChatBot</h1>
+          <h2 className="signup-subtitle">Welcome back</h2>
+          <p className="signup-description">Enter your email to log in for this app</p>
 
           <input
             type="email"
             placeholder="email@domain.com"
-            className="w-full p-3 mb-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="signup-input"
           />
 
-          <button className="w-full py-3 mb-4 bg-black text-white rounded-xl hover:bg-gray-800 transition">
+          <button className="signup-button">
             Continue
           </button>
 
-          <p className="text-sm text-gray-600 mb-4">
-            Already have an account?{" "}
-            <a href="/login" className="text-blue-500 hover:underline">
-              Log in
-            </a>
+          <p className="signup-login-link">
+            Don't have an account?{" "}
+            <a href="/signup">Sign Up</a>
           </p>
 
-          <p className="text-sm text-gray-600 mb-3">or continue with</p>
+          <p className="signup-divider">or continue with</p>
 
-          <div className="flex justify-center mb-5">
-            <button
+          <button 
               type="button"
               onClick={() => login()}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-xl shadow hover:bg-gray-100 transition"
-            >
-              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" className="w-5 h-5" />
-              Continue with Google
-            </button>
-          </div>
+              className="signup-google-button">
+            <img
+              src="https://www.google.com/favicon.ico"
+              alt="Google"
+              className="signup-google-icon"
+            />
+            <span className="signup-google-text">Google</span>
+          </button>
 
-          <p className="text-xs text-gray-400">Terms of Service | Privacy Policy</p>
+          <p className="signup-footer">Terms of Service | Privacy Policy</p>
         </div>
       </div>
     </div>

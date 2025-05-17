@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './Sidebar.css';
-import { NavLink } from "react-router-dom";
-import { Home, Search, List, FileText, Smile } from 'lucide-react'; // Icons
+import { useNavigate, useLocation } from "react-router-dom";
+import { Home, Search, List, FileText, Smile } from 'lucide-react';
 
 interface UserData {
   name: string;
@@ -10,7 +10,8 @@ interface UserData {
 
 const Sidebar: React.FC = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
-
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userDataString = localStorage.getItem('user');
@@ -22,60 +23,68 @@ const Sidebar: React.FC = () => {
       });
     }
   }, []);
+
   if (!userData) {
     return <div>Loading...</div>;
   }
-  return (
-    <aside className="sidebar">
-      <div className="p-6 w-[85%]">
-        <h1 className="text-xl  text-indigo-600 mb-8"><b>School AI ChatBot</b></h1>
-        <div className="displayUserLogged">
-          <span className="text-gray-700">Hello, {userData.name}</span>
-          <img
-            src={userData?.picture}
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-        </div>
-        <div className="mt-5 ml-2 text-xl font-bold text-gray-500"><h5>Discover</h5></div>
-        <ul className="space-y-4 text-sm mt-3 mb-5">
-          <li>
-            <NavLink to="/home" className={({ isActive }) =>
-              `mt-2 flex items-center gap-2 px-2 py-2 rounded-md  ${isActive ? 'bg-gray-100 font-medium text-black' : 'text-gray-600 hover:text-blue-600'}`
-            }>
-              <Home size={25} />
-              Home
-            </NavLink>
-          </li>
-          <li className="flex items-center gap-2 px-2 py-2 rounded-md text-gray-600 hover:text-blue-600">
-            <Search size={25} />
-            Search
-          </li>
-        </ul>
 
-        <div className="mb-4 text-sm font-semibold text-gray-500"><h5>Library</h5></div>
-        <ul className="space-y-2 text-sm">
-          <li className="my-2">
-            <NavLink to="/home/chats" className={({ isActive }) =>
-              `flex items-center gap-2 my-2 rounded-md ${isActive ? 'bg-gray-100 font-medium text-black' : 'text-gray-600 hover:text-blue-600'}`
-            }>
-              <List size={25} />
+  const isActive = (path: string) => location.pathname === path;
+
+  return (
+    <aside className="Sidebar">
+      <div className="Sidebar-content">
+        <h1 className="Sidebar-title">School AI ChatBot</h1>
+        <div className="Sidebar-displayUserLogged">
+          <span>Hello, {userData.name}</span>
+          <img src={userData?.picture} alt="Profile" />
+        </div>
+        
+        <div className="Sidebar-sectionTitle">Discover</div>
+        <div className="Sidebar-navList">
+          <div className="Sidebar-navItem">
+            <button
+              onClick={() => navigate('/home')}
+              className={`Sidebar-navLink ${isActive('/home') ? 'Sidebar-active' : ''}`}
+            >
+              <Home className="Sidebar-icon" />
+              Home
+            </button>
+          </div>
+          <div className="Sidebar-navItem">
+            <button className="Sidebar-navLink">
+              <Search className="Sidebar-icon" />
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div className="Sidebar-sectionTitle">Library</div>
+        <div className="Sidebar-libraryList">
+          <div className="Sidebar-libraryItem">
+            <button
+              onClick={() => navigate('/home/chats')}
+              className={`Sidebar-navLink ${isActive('/home/chats') ? 'Sidebar-active' : ''}`}
+            >
+              <List className="Sidebar-icon" />
               Chats
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/home/quiz" className={({ isActive }) =>
-              `flex items-center gap-2 rounded-md ${isActive ? 'bg-gray-100 font-medium text-black' : 'text-gray-600 hover:text-blue-600'}`
-            }>
-              <FileText size={25} />
+            </button>
+          </div>
+          <div className="Sidebar-libraryItem">
+            <button
+              onClick={() => navigate('/home/quiz')}
+              className={`Sidebar-navLink ${isActive('/home/quiz') ? 'Sidebar-active' : ''}`}
+            >
+              <FileText className="Sidebar-icon" />
               Quiz Generator
-            </NavLink>
-          </li>
-          <li className="flex items-center gap-2 px-2 py-2 rounded-md text-gray-600 hover:text-blue-600">
-            <Smile size={25} />
-            Favorites
-          </li>
-        </ul>
+            </button>
+          </div>
+          <div className="Sidebar-libraryItem">
+            <button className="Sidebar-navLink">
+              <Smile className="Sidebar-icon" />
+              Favorites
+            </button>
+          </div>
+        </div>
       </div>
     </aside>
   );

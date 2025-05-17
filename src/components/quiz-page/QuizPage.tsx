@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import QuizForm from '../quiz-form/QuizForm'; // Make sure the path is correct
+import QuizForm from '../quiz-form/QuizForm';
 import './QuizPage.css';
+import '../quiz/quiz-list/QuizList.css';
 
 const QuizPage: React.FC = () => {
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
@@ -31,46 +32,46 @@ const QuizPage: React.FC = () => {
   );
 
   return (
-    <div className="quiz-list-container">
-      <div className="quiz-list-header">
-        <h1 className="quiz-list-title">Quiz Generator</h1>
-        <button className="header-button" onClick={() => setShowForm(true)}>New Quiz</button>
+    <div className="quizpage-list-container">
+      <div className="quizpage-list-header">
+        <h1 className="quizpage-list-title">Quiz Generator</h1>
+        <button className="quizpage-header-button" onClick={() => setShowForm(true)}>New Quiz</button>
       </div>
 
       <input
-        className="quiz-list-search"
+        className="quizpage-list-search"
         placeholder="Search..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      <button className="more-button">≡</button>
+      <button className="quizpage-more-button">≡</button>
 
-      <div className="quiz-list-column-headers">
-        <span className="date-header">Date</span>
-        <span className="subject-header">Subject</span>
+      <div className="quizpage-list-column-headers">
+        <span className="quizpage-date-header">Date</span>
+        <span className="quizpage-subject-header">Subject</span>
       </div>
 
-      <div className="quiz-list">
+      <div className="quizpage-list">
         {filteredQuizzes.map((item) => (
-          <div key={item.id} className="quiz-item-container">
-            <div className="quiz-item-main" onClick={() => toggleExpand(item.id)}>
-              <div className="quiz-item-code">{item.code}</div>
-              <div className="quiz-item-content">
-                <div className="quiz-item-date">{item.date}</div>
-                <div className="quiz-item-subject">{item.subject}</div>
-                <div className="quiz-item-toggle">
+          <div key={item.id} className="quizpage-item-container">
+            <div className="quizpage-item-main" onClick={() => toggleExpand(item.id)}>
+              <div className="quizpage-item-code">{item.code}</div>
+              <div className="quizpage-item-content">
+                <div className="quizpage-item-date">{item.date}</div>
+                <div className="quizpage-item-subject">{item.subject}</div>
+                <div className="quizpage-item-toggle">
                   {expandedItems[item.id] ? '▲' : '▼'}
                 </div>
               </div>
             </div>
 
             {expandedItems[item.id] && item.quizzes.length > 0 && (
-              <div className="quiz-expanded-content">
+              <div className="quizpage-expanded-content">
                 {item.quizzes.map((quiz, index) => (
-                  <div key={index} className="quiz-option">
-                    <span className="quiz-name">{quiz}</span>
-                    <button className="take-quiz-button">Take quiz</button>
+                  <div key={index} className="quizpage-option">
+                    <span className="quizpage-name">{quiz}</span>
+                    <button className="take-quizpage-button">Take quiz</button>
                   </div>
                 ))}
               </div>

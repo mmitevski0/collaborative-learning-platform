@@ -1,5 +1,7 @@
-.sidebar {
+.Sidebar {
+    font-family: 'Inter', sans-serif;
     width: 15%;
+    min-width: 230px;
     height: 100vh;
     background-color: white;
     border-right: 1px solid #e5e7eb;
@@ -7,36 +9,101 @@
     top: 0;
     left: 0;
     z-index: 10;
-    padding: 1.5rem;
+    padding: 0.75rem;
     overflow-y: auto;
 }
 
-.sidebar ul {
+.Sidebar-content {
+    padding: 1rem 0 1rem 0.8rem;
+    width: 100%;
+}
+
+.Sidebar-title {
+    font-size: 20px;
+    color: #7886C7;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.Sidebar-displayUserLogged {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+}
+
+.Sidebar-displayUserLogged img {
+    width: 42px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.Sidebar-displayUserLogged span {
+    font-size: 16px;
+    color: #374151;
+}
+
+.Sidebar-sectionTitle {
+    margin-top: 2rem;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+}
+
+.Sidebar-navList, .Sidebar-libraryList {
+    margin-bottom: 3rem;
     list-style-type: none;
     padding: 0;
 }
 
-.sidebar li {
+.Sidebar-navItem, .Sidebar-libraryItem {
     transition: all 0.2s ease-in-out;
+    margin-bottom: -10px;
+    padding: 10px 0;
+}
+
+.Sidebar-navLink {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-radius: 8px;
+    color: #111;
+    background-color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.Sidebar-navLink:hover {
+    background-color: #f7f7f7;
+}
+
+.Sidebar-navLink.Sidebar-active {
+    background-color: #f0f0f0;
+    font-weight: 600;
+}
+
+.Sidebar-icon {
+    margin-right: 20px;
+    margin-left: -10px;
+    text-align: center;
+    width: 24px;
+    height: 24px;
 }
 
 @media (max-width: 1024px) {
-    .sidebar {
+    .Sidebar {
         width: 100%;
         height: auto;
         position: relative;
+        min-width: auto;
     }
-}
-
-.displayUserLogged{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 20px;
-}
-
-.displayUserLogged img {
-    width: 40px;
-    object-fit: contain;
-    border-radius: 50%;
 }

@@ -4,6 +4,7 @@ import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
 import { db } from '../../../firebase';
 import { useAuth } from '../../Login';
 import { NavLink } from 'react-router-dom';
+import "./ChatList.css";
 
 const ChatList: React.FC = () => {
     const { user } = useAuth();
@@ -63,18 +64,17 @@ const ChatList: React.FC = () => {
     }, [user]);
 
     return (
-        <div className="container  my-5 ">
-            <div style={{ padding: '25px 0' }} className="d-flex justify-content-between align-items-center">
-                <h1 style={{ textAlign: 'left' }}>Chats</h1>
-                <button className="btn btn-primary text-white"> <NavLink to="/home/chats" >
-                    New chat</NavLink></button>
+        <div className="chatlist-container">
+            <div className="chatlist-header">
+                <h1 className="chatlist-title">Chats</h1>
+                <NavLink to="/home/chats" className="chatlist-new-button">
+                    New chat
+                </NavLink>
             </div>
-            <div className="d-flex justify-content-center" style={{ flexDirection: 'column' }}>
-                <div style={{ display: 'flex', gap: '20px', padding: '0', flexWrap: 'wrap' }}>
-                    {chats.map((chatData, index) => (
-                        <ChatDetails key={index} chat={chatData.chat} />
-                    ))}
-                </div>
+            <div className="chatlist-grid">
+                {chats.map((chatData, index) => (
+                    <ChatDetails key={index} chat={chatData.chat} />
+                ))}
             </div>
         </div>
     );

@@ -126,26 +126,26 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
     <div className="chat-history">
       <div className="history-header">
         <h1 className="history-title">Chats</h1>
-        <button className="new-chat-button" onClick={startNewChat}>New Chat</button>
+        <button className="history-new-chat-button" onClick={startNewChat}>New Chat</button>
       </div>
 
       <input
-        className="search-input"
+        className="history-search-input"
         placeholder="Search..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      <div className="column-headers">
-        <span className="date-header">Date</span>
-        <span className="title-header">Title</span>
+      <div className="history-column-headers">
+        <span className="history-date-header">Date</span>
+        <span className="history-title-header">Title</span>
       </div>
 
-      <div className="chats-list">
+      <div className="history-chats-list">
         {filteredChats.map(chat => (
-          <div key={chat.id} className="chat-item-container">
+          <div key={chat.id} className="history-chat-item-container">
             <button
-              className={`chat-item ${activeChat === chat.id ? 'active' : ''}`}
+              className={`history-chat-item ${activeChat === chat.id ? 'active' : ''}`}
               onClick={() => {
                 setActiveChat(chat.id);
                 setCurrentChatId(chat.id);
@@ -153,15 +153,15 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
                 setMessages(chat.messages);
               }}
             >
-              <div className="chat-dots">···</div>
-              <span className="chat-date">{chat.date}</span>
-              <span className="chat-title">
+              <div className="history-chat-dots">···</div>
+              <span className="history-chat-date">{chat.date}</span>
+              <span className="history-chat-title">
                 {chat.firstMessage.text.length > 30
                   ? chat.firstMessage.text.substring(0, 30) + '...'
                   : chat.firstMessage.text}
               </span>
             </button>
-            <div className="chat-divider"></div>
+            <div className="history-chat-divider"></div>
           </div>
         ))}
         {loading && (

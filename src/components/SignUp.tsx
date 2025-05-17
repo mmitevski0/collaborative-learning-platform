@@ -1,4 +1,5 @@
 import React from "react";
+import "./SignUp.css";
 
 const SignUp: React.FC = () => {
   return (
@@ -16,41 +17,39 @@ const SignUp: React.FC = () => {
         </svg>
       </div>
 
-      <div className="relative z-10 flex items-center justify-center h-full px-4">
-        <div className="w-full max-w-md bg-white/90 p-6 rounded-2xl shadow-xl text-center">
-          <h1 className="text-4xl font-extrabold text-blue-500 mb-3">School AI ChatBot</h1>
-          <h2 className="text-lg font-medium text-black mb-1">Create an account</h2>
-          <p className="text-sm text-gray-600 mb-6">Enter your email to sign up</p>
+      <div className="signup-container">
+        <div className="signup-card">
+          <h1 className="signup-title">School AI ChatBot</h1>
+          <h2 className="signup-subtitle">Create an account</h2>
+          <p className="signup-description">Enter your email to sign up for this app</p>
 
           <input
             type="email"
             placeholder="email@domain.com"
-            className="w-full p-3 mb-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="signup-input"
           />
 
-          <button className="w-full py-3 mb-4 bg-black text-white rounded-xl hover:bg-gray-800 transition">
+          <button className="signup-button">
             Continue
           </button>
 
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="signup-login-link">
             Already have an account?{" "}
-            <a href="/login" className="text-blue-500 hover:underline">
-              Log in
-            </a>
+            <a href="/login">Log in</a>
           </p>
 
-          <p className="text-sm text-gray-600 mb-3">or continue with</p>
+          <p className="signup-divider">or continue with</p>
 
-          <button className="w-full flex items-center justify-center gap-3 py-3 mb-4 bg-white border border-gray-300 rounded-xl shadow hover:bg-gray-100 transition">
+          <button className="signup-google-button">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-              alt="Google Logo"
-              className="w-5 h-5"
+              src="https://www.google.com/favicon.ico"
+              alt="Google"
+              className="signup-google-icon"
             />
-            <span className="text-sm font-medium text-gray-700">Sign up with Google</span>
+            <span className="signup-google-text">Google</span>
           </button>
 
-          <p className="text-xs text-gray-400">Terms of Service | Privacy Policy</p>
+          <p className="signup-footer">Terms of Service | Privacy Policy</p>
         </div>
       </div>
     </div>

@@ -1,0 +1,45 @@
+.chatlist-container {
+    padding: 3rem 0;
+    width: 1150;
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+.chatlist-header {
+    padding: 25px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatlist-title {
+    text-align: left;
+    margin: 0;
+    font-size: 34px;
+    font-weight: 600;
+}
+
+.chatlist-new-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.chatlist-new-button:hover {
+    background-color: #333;
+    color: white;
+}
+
+.chatlist-grid {
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
