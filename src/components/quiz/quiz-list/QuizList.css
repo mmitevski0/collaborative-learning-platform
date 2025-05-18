@@ -43,16 +43,27 @@
 }
 
 .QuizList-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    justify-items: center;
-    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ccc transparent;
+}
+
+.QuizList-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.QuizList-grid::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
 }
 
 .QuizList-quiz {
-    min-width: 0;
-    margin-bottom: 1rem;
+    flex: 0 0 auto;
 }
+
 
 .modal-overlay {
     position: fixed;

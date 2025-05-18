@@ -14,19 +14,25 @@ const Welcome: React.FC = () => {
         >
           <path
             d="M0,320 C480,160 960,160 1440,0"
-            stroke="#ccc"
             strokeWidth="1"
+            stroke="#FFE1E0"
             fill="none"
           />
           <path
             d="M0,280 C480,120 960,120 1440,-20"
-            stroke="#ddd"
+            stroke="#FFFBDE"
             strokeWidth="1"
             fill="none"
           />
           <path
             d="M0,240 C480,80 960,100 1440,10"
-            stroke="#bbb"
+            stroke="#F4F8D3"
+            strokeWidth="1"
+            fill="none"
+          />
+          <path
+            d="M0,253 C480,100 910,110 1440,30"
+            stroke="#A6D6D6"
             strokeWidth="1"
             fill="none"
           />
@@ -47,7 +53,14 @@ const Welcome: React.FC = () => {
           <div className="welcome-button-group">
             <button className="welcome-try-button">Try it First</button>
           </div>
-          <p className="welcome-footer">Terms of Service | Privacy Policy</p>
+          <div className="welcome-line">
+            <div className="horizontal-line" />
+          </div>
+          <p className="welcome-footer">
+  <Link to="/terms" className="welcome-footer-link">Terms of Service</Link>
+  {" | "}
+  <Link to="/privacy" className="welcome-footer-link">Privacy Policy</Link>
+</p>
         </div>
       </div>
     </div>

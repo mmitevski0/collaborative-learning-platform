@@ -3,6 +3,8 @@ import './index.css';
 import HomeScreen from './components/home-screen/HomeScreen';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import Terms from './components/Terms';
+import Privacy from './components/Privacy';
 
 import Welcome from './components/Welcome';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -18,6 +20,8 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/home/*" element={<HomeScreen />}>
           <Route path="chats" element={<ChatPage />} />
           <Route path="quiz" element={<QuizGenerator />} />

@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import "./SignUp.css";
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 
 interface User {
@@ -125,7 +126,10 @@ const SignUp: React.FC = () => {
             <span className="signup-google-text">Google</span>
           </button>
 
-          <p className="signup-footer">Terms of Service | Privacy Policy</p>
+          <p className="signup-footer"> <Link to="/terms" className="signup-footer-link">Terms of Service</Link>
+  {" | "}
+  <Link to="/privacy" className="signup-footer-link">Privacy Policy</Link>
+</p>
         </div>
       </div>
     </div>

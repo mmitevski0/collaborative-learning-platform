@@ -127,3 +127,14 @@
   font-weight: 400;
   color: #7886C7;
 }
+
+.signup-footer-link {
+  color: #7886C7;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.signup-footer-link:hover {
+  color: #555;
+  text-decoration: underline;
+}

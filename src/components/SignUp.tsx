@@ -1,5 +1,6 @@
 import React from "react";
 import "./SignUp.css";
+import { Link } from "react-router-dom";
 
 const SignUp: React.FC = () => {
   return (
@@ -49,7 +50,12 @@ const SignUp: React.FC = () => {
             <span className="signup-google-text">Google</span>
           </button>
 
-          <p className="signup-footer">Terms of Service | Privacy Policy</p>
+          <p className="signup-footer"> 
+          <Link to="/terms" className="signup-footer-link">Terms of Service</Link>
+  {" | "}
+  <Link to="/privacy" className="signup-footer-link">Privacy Policy</Link>
+
+          </p>
         </div>
       </div>
     </div>

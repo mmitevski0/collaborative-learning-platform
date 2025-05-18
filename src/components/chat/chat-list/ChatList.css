@@ -38,12 +38,25 @@
 
 .chatlist-grid {
     display: flex;
+    overflow-x: auto;
     gap: 20px;
-    padding: 0;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
 }
 
+.chatlist-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.chatlist-grid::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.chatlist-grid > * {
+    flex: 0 0 auto;
+}
 .chatlist-empty-state {
     width: 100%;
     text-align: left;

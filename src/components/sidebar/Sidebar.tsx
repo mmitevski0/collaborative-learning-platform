@@ -39,10 +39,6 @@ const Sidebar: React.FC = () => {
     <aside className="Sidebar">
       <div className="Sidebar-content">
         <h1 className="Sidebar-title">School AI ChatBot</h1>
-        <div className="Sidebar-displayUserLogged">
-          <span>Hello, {userData.name}</span>
-          <img src={userData?.picture} alt="Profile" />
-        </div>
 
         <div className="Sidebar-sectionTitle">Discover</div>
         <div className="Sidebar-navList">
@@ -53,12 +49,6 @@ const Sidebar: React.FC = () => {
             >
               <Home className="Sidebar-icon" />
               Home
-            </button>
-          </div>
-          <div className="Sidebar-navItem">
-            <button className="Sidebar-navLink">
-              <Search className="Sidebar-icon" />
-              Search
             </button>
           </div>
         </div>
@@ -83,14 +73,13 @@ const Sidebar: React.FC = () => {
               Quiz Generator
             </button>
           </div>
-          <div className="Sidebar-libraryItem">
-            <button className="Sidebar-navLink">
-              <Smile className="Sidebar-icon" />
-              Favorites
-            </button>
-          </div>
         </div>
+      
         <div className="Sidebar-logout">
+          <div className="Sidebar-displayUserLogged">
+          <span>Hello, {userData.name}</span>
+          <img src={userData?.picture} alt="Profile" />
+        </div>
           <button
             onClick={() => {
               localStorage.removeItem('user');

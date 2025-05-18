@@ -1,0 +1,49 @@
+.legal-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    overflow: hidden;
+  }
+  
+  .legal-container {
+    flex: 1;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    padding-top: 5rem;
+    padding-left: 3rem;
+    z-index: 1;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .svg-background {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 300px;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+.legal-title{
+    color: #7886C7;
+    font-weight: 500;
+    font-size: 60px;
+}
+
+.back-button {
+    font-size: 13px;
+    padding: 10px 0;
+    padding-left: 3%;
+    background: none;
+    border: none;
+    color: #4a4a4a;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    text-align: left;
+  }
+  

@@ -3,7 +3,7 @@
   z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   height: 100%;
   padding: 0 1rem;
   font-family: 'Inter', sans-serif;
@@ -18,7 +18,7 @@
 
 .welcome-title {
   font-size: 48px;
-  font-weight: 600;
+  font-weight: 500;
   color: #7886C7;
   margin-bottom: 3rem;
   line-height: 1.25;
@@ -71,4 +71,26 @@ button:focus {
   font-weight: 400;
   color: #7886C7;
   margin-top: 2rem;
+}
+
+.horizontal-line {
+  width: 100%;
+  max-width: 300px;
+  height: 0.5px;
+  background-color: #e0e0e0;
+}
+
+.welcome-line {
+  display: flex;
+  justify-content: center;
+}
+.welcome-footer-link {
+  color: #7886C7;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.welcome-footer-link:hover {
+  color: #555;
+  text-decoration: underline;
 }

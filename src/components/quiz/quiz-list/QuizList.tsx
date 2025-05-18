@@ -9,37 +9,55 @@ const QuizList: React.FC = () => {
     const quizes: QuizDetailsProps[] = [
                 {
             quiz: {
-                color: 'cyan',
+                color: '#3D8D7A',
                 title: 'Управување со ИКТ проекти'
             }
         },
         {
             quiz: {
-                color: 'red',
+                color: '#3D8D7A',
                 title: 'Дискретна математика'
             }
         },
         {
             quiz: {
-                color: 'gray',
+                color: '#5F99AE',
                 title: 'Веројатност и статистика'
             }
         },
         {
             quiz: {
-                color: 'green',
+                color: '#E4EFE7',
                 title: 'Електронска и мобилна трговија'
             }
         },
         {
             quiz: {
-                color: 'lightblue',
+                color: '#E69DB8',
                 title: 'Менаџмент информациски системи'
             }
         },
         {
             quiz: {
-                color: 'purple',
+                color: '#E69DB8',
+                title: 'Компјутерски мрежи'
+            }
+        },
+        {
+            quiz: {
+                color: 'orange',
+                title: 'Веб дизајн'
+            }
+        },
+        {
+            quiz: {
+                color: '#E69DB8',
+                title: 'Менаџмент информациски системи'
+            }
+        },
+        {
+            quiz: {
+                color: '#E69DB8',
                 title: 'Компјутерски мрежи'
             }
         },

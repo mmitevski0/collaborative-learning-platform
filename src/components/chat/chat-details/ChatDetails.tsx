@@ -45,11 +45,19 @@ const ChatDetails: React.FC<ChatDetailsProps> = ({ chatId, chat }) => {
                         className={`d-flex ${message.isOutgoing ? 'justify-content-end' : 'justify-content-start'}`}
                     >
                         <span
-                            className={`p-2 rounded ${message.isOutgoing ? 'bg-primary text-white' : 'bg-light text-dark'}`}
-                            style={{ fontSize: '12px', maxWidth: '80%' }}
+                            className={`p-2 rounded ${message.isOutgoing ? 'text-white' : 'bg-light text-dark'}`}
+                            style={{
+                                fontSize: '12px',
+                                maxWidth: '80%',
+                                backgroundColor: message.isOutgoing ? 'black' : undefined,
+                                whiteSpace: 'normal',
+                                wordWrap: 'break-word',
+                                overflowWrap: 'break-word',
+                                wordBreak: 'break-word',
+                            }}
                         >
-                            {message.text}
-                        </span>
+                        {message.text.length > 100 ? `${message.text.slice(0, 100)}...` : message.text}
+                    </span>
                     </div>
                 ))}
             </div>

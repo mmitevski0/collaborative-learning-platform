@@ -76,7 +76,7 @@ const ChatList: React.FC = () => {
             <div className="chatlist-header">
                 <h1 className="chatlist-title">Chats</h1>
                 <NavLink to="/home/chats" className="chatlist-new-button">
-                    New chat
+                    New Chat
                 </NavLink>
             </div>
             <div className="chatlist-grid">
