@@ -10,7 +10,7 @@ const clientId = import.meta.env.GOOGLE_CLIENT_ID;
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId="927850892063-uj7tsuqfuhcvnci32dc6h91h2dr9nc8g.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={clientId}>
       <AuthProvider>
         <App />
       </AuthProvider>
