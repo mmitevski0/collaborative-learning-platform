@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface ChatMessage {
     text: string;
@@ -7,65 +8,63 @@ interface ChatMessage {
 }
 
 export interface ChatDetailsProps {
+    chatId: string;
     chat: {
         name: string;
         messages: ChatMessage[];
     };
-    onClick?: () => void; // To handle navigation when card is clicked
 }
 
-const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, onClick }) => {
-    const visibleMessages = chat.messages.slice(-3); // Last 3 messages
+const ChatDetails: React.FC<ChatDetailsProps> = ({ chatId, chat }) => {
+    const navigate = useNavigate();
+    const visibleMessages = chat.messages.slice(-3);
+
+    const handleClick = () => {
+        navigate(`/home/chats?chatId=${chatId}`);
+    };
 
     return (
-        <div>
-            <div
-                className="card shadow-sm border rounded-3 m-2"
-                onClick={onClick}
-                style={{
-                    height: '18rem',
-                    width: '280px',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    padding: '7px',
-                    backgroundColor: '#fff',
-                    transition: 'box-shadow 0.2s ease-in-out',
-                }}
-            >
-
-
-                <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {visibleMessages.map((message, index) => (
-                        <div
-                            key={index}
-                            className={`d-flex ${message.isOutgoing ? 'justify-content-end' : 'justify-content-start'}`}
+        <div
+            className="card shadow-sm border rounded-3 m-2"
+            onClick={handleClick}
+            style={{
+                height: '18rem',
+                width: '280px',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '7px',
+                backgroundColor: '#fff',
+                transition: 'box-shadow 0.2s ease-in-out',
+            }}
+        >
+            <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {visibleMessages.map((message, index) => (
+                    <div
+                        key={index}
+                        className={`d-flex ${message.isOutgoing ? 'justify-content-end' : 'justify-content-start'}`}
+                    >
+                        <span
+                            className={`p-2 rounded ${message.isOutgoing ? 'bg-primary text-white' : 'bg-light text-dark'}`}
+                            style={{ fontSize: '12px', maxWidth: '80%' }}
                         >
-                            <span
-                                className={`p-2 rounded ${message.isOutgoing ? 'bg-primary text-white' : 'bg-light text-dark'
-                                    }`}
-                                style={{ fontSize: '12px', maxWidth: '80%' }}
-                            >
-                                {message.text}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="text-end mt-2" style={{ fontSize: '18px', color: '#ccc' }}>
-                    <span>↗</span>
-                </div>
-
+                            {message.text}
+                        </span>
+                    </div>
+                ))}
             </div>
+
+            <div className="text-end mt-2" style={{ fontSize: '18px', color: '#ccc' }}>
+                <span>↗</span>
+            </div>
+
             <h5
                 className="text-truncate"
                 style={{
-
                     fontWeight: 600,
                     fontSize: '20px',
                     marginBottom: '8px',
                     paddingLeft: '18px',
-
                 }}
             >
                 {chat.name}

@@ -120,7 +120,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     try {
       await addDoc(collection(db, "messages"), {
         userId: user?.id,
-        chatId: currentChatId, 
+        chatId: currentChatId,
         sender,
         text,
         timestamp: serverTimestamp()
@@ -133,8 +133,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
 
-    const userString = localStorage.getItem("user");
-    const user = userString ? JSON.parse(userString) : null;
     if (!user?.id) {
       toast.error("Please sign in first");
       return;

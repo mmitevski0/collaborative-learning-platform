@@ -4,6 +4,7 @@ import { collection, query, orderBy, getDocs, where } from "firebase/firestore";
 import { db } from '../../firebase';
 import { useAuth } from '../Login';
 import { formatDistanceToNow } from 'date-fns';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export interface ChatMessage {
   id: string;
@@ -20,6 +21,7 @@ interface ChatHistoryProps {
   currentChatId: string;
   setCurrentChatId: React.Dispatch<React.SetStateAction<string>>;
 }
+
 interface ChatGroup {
   id: string;
   date: string;
@@ -34,13 +36,16 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
   currentChatId,
   setCurrentChatId
 }) => {
+
   const { user } = useAuth();
   const [chats, setChats] = useState<ChatGroup[]>([]);
-  const [activeChat, setActiveChat] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState('');
   const [isInitialState, setIsInitialState] = useState(true);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (user?.id) {
@@ -72,13 +77,12 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
 
   const startNewChat = () => {
     const newChatId = Date.now().toString();
-    localStorage.setItem('currentChatId', newChatId);
     setCurrentChatId(newChatId);
     setMessages([]);
     setNewMessage('');
-    setActiveChat(null);
     setIsInitialState(true);
   };
+
   const fetchUserChats = async (userId: string) => {
     try {
       const q = query(
@@ -145,12 +149,13 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
         {filteredChats.map(chat => (
           <div key={chat.id} className="history-chat-item-container">
             <button
-              className={`history-chat-item ${activeChat === chat.id ? 'active' : ''}`}
+              className={`history-chat-item ${currentChatId === chat.id ? 'active' : ''}`}
               onClick={() => {
-                setActiveChat(chat.id);
                 setCurrentChatId(chat.id);
-                localStorage.setItem('currentChatId', chat.id);
                 setMessages(chat.messages);
+
+                const newUrl = `${location.pathname}?chatId=${chat.id}`;
+                navigate(newUrl, { replace: true });
               }}
             >
               <div className="history-chat-dots">···</div>

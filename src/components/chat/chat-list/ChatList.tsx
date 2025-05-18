@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ChatDetails, { ChatDetailsProps } from "../chat-details/ChatDetails";
-import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '../../../firebase';
 import { useAuth } from '../../Login';
 import { NavLink } from 'react-router-dom';
@@ -8,7 +8,7 @@ import "./ChatList.css";
 
 const ChatList: React.FC = () => {
     const { user } = useAuth();
-    const [chats, setChats] = useState<ChatDetailsProps[]>([]);
+    const [chats, setChats] = useState<{ chatId: string; chat: ChatDetailsProps['chat'] }[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const ChatList: React.FC = () => {
                     return acc;
                 }, {} as Record<string, ChatDetailsProps['chat']>);
 
-                const finalChats = Object.values(grouped).map(chat => ({ chat }));
+                const finalChats = Object.entries(grouped).map(([chatId, chat]) => ({ chatId, chat }));
                 console.log("Grouped chats:", finalChats);
 
                 setChats(finalChats);
@@ -81,8 +81,8 @@ const ChatList: React.FC = () => {
             </div>
             <div className="chatlist-grid">
                 {chats.length > 0 ? (
-                    chats.map((chatData, index) => (
-                        <ChatDetails key={index} chat={chatData.chat} />
+                    chats.map(({ chatId, chat }) => (
+                        <ChatDetails key={chatId} chatId={chatId} chat={chat} />
                     ))
                 ) : (
                     <div className="chatlist-empty-state">
