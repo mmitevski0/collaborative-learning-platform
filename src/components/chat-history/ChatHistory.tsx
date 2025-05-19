@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 import './ChatHistory.css';
-import { collection, query, orderBy, getDocs, where } from "firebase/firestore";
+import {
+  collection,
+  query,
+  orderBy,
+  getDocs,
+  where,
+  deleteDoc,
+  doc
+} from "firebase/firestore";
 import { db } from '../../firebase';
 import { useAuth } from '../Login';
 import { formatDistanceToNow } from 'date-fns';
@@ -122,6 +130,33 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
     }
   };
 
+  const deleteChat = async (chatId: string) => {
+    const confirmed = window.confirm("Are you sure you want to delete this chat?");
+    if (!confirmed) return;
+
+    try {
+      const q = query(
+        collection(db, "messages"),
+        where("chatId", "==", chatId)
+      );
+      const snapshot = await getDocs(q);
+
+      const deletions = snapshot.docs.map(docItem =>
+        deleteDoc(doc(db, "messages", docItem.id))
+      );
+      await Promise.all(deletions);
+
+      setChats(prevChats => prevChats.filter(chat => chat.id !== chatId));
+
+      if (currentChatId === chatId) {
+        setCurrentChatId('');
+        setMessages([]);
+      }
+    } catch (error) {
+      console.error("Error deleting chat:", error);
+    }
+  };
+
   const filteredChats = chats.filter(chat =>
     chat.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -158,27 +193,32 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
                 navigate(newUrl, { replace: true });
               }}
             >
-
-<div className="history-chat-dots">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"   
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="delete-icon"
+              <div
+                className="history-chat-dots"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent triggering chat selection
+                  deleteChat(chat.id);
+                }}
               >
-                <polyline points="3 6 5 6 21 6" />
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                <line x1="10" y1="11" x2="10" y2="17" />
-                <line x1="14" y1="11" x2="14" y2="17" />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="delete-icon"
+                >
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  <line x1="10" y1="11" x2="10" y2="17" />
+                  <line x1="14" y1="11" x2="14" y2="17" />
+                </svg>
               </div>
-              
+
               <span className="history-chat-date">{chat.date}</span>
               <span className="history-chat-title">
                 {chat.firstMessage.text.length > 30
