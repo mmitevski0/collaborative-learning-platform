@@ -1,19 +1,48 @@
-import { StrictMode } from 'react';
-import NewChatModal from "./components/NewChatModal.tsx";
+import './App.css';
+import './index.css';
+import HomeScreen from './components/home-screen/HomeScreen';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import Terms from './components/Terms';
+import Privacy from './components/Privacy';
 
-export default function App() {
-    // in a real app you’ll get this from Firebase Auth
-    const currentUserUid = 'uidA';
+import Welcome from './components/Welcome';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ChatPage from './components/chat-page/ChatPage';
+import ChatList from './components/chat/chat-list/ChatList';
+import QuizGenerator from './components/quiz-page/QuizPage';
+import QuizList from './components/quiz/quiz-list/QuizList';
+import QuizView from './components/quiz-view/QuizView';
 
-    return (
-        <StrictMode>
-            <main className="min-h-screen flex items-center justify-center bg-zinc-900 text-white">
-                <div className="w-full max-w-md p-6 bg-zinc-800 rounded-xl shadow-lg">
-                    <h1 className="text-2xl font-semibold mb-4 text-center">Create a Chat</h1>
-
-                    <NewChatModal userUid={currentUserUid} />
-                </div>
-            </main>
-        </StrictMode>
-    );
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/home/*" element={<HomeScreen />}>
+          <Route path="chats" element={<ChatPage />} />
+          <Route path="quiz-view" element={<QuizView />} />
+          <Route path="quiz" element={<QuizGenerator />} />
+          <Route
+            index
+            element={
+              <>
+                <section className="mb-10">
+                  <ChatList />
+                </section>
+                <section className="mt-5">
+                  <QuizList />
+                </section>
+              </>
+            }
+          />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
+export default App;

@@ -1,0 +1,82 @@
+.quiz-form-container {
+    font-family: Inter, sans-serif;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  input:focus {
+    outline: none;
+  }
+  
+  .quiz-form-title {
+    color: #7886C7;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+
+  .quiz-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .quiz-form-select-container {
+    position: relative;
+  }
+  
+  .quiz-form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    appearance: none;
+    background-color: #fff;
+    color: #111;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  
+  .quiz-form-file-container {
+    border: 1px solid #ddd;
+    background-color: #eee;
+    border-radius: 6px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .quiz-form-file-label {
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+    color: #111;
+    cursor: pointer;
+  }
+  
+  .quiz-form-file {
+    display: none;
+  }
+  
+  .quiz-form-button {
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .quiz-form-button:hover {
+    background-color: #333;
+  }
