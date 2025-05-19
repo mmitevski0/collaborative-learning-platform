@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import './index.css';
+import HomeScreen from './components/home-screen/HomeScreen';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import Terms from './components/Terms';
+import Privacy from './components/Privacy';
+
+import Welcome from './components/Welcome';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ChatPage from './components/chat-page/ChatPage';
+import ChatList from './components/chat/chat-list/ChatList';
+import QuizGenerator from './components/quiz-page/QuizPage';
+import QuizList from './components/quiz/quiz-list/QuizList';
+import QuizView from './components/quiz-view/QuizView';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/home/*" element={<HomeScreen />}>
+          <Route path="chats" element={<ChatPage />} />
+          <Route path="quiz-view" element={<QuizView />} />
+          <Route path="quiz" element={<QuizGenerator />} />
+          <Route
+            index
+            element={
+              <>
+                <section className="mb-10">
+                  <ChatList />
+                </section>
+                <section className="mt-5">
+                  <QuizList />
+                </section>
+              </>
+            }
+          />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
-
-export default App
+export default App;
