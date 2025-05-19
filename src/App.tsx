@@ -12,6 +12,7 @@ import ChatPage from './components/chat-page/ChatPage';
 import ChatList from './components/chat/chat-list/ChatList';
 import QuizGenerator from './components/quiz-page/QuizPage';
 import QuizList from './components/quiz/quiz-list/QuizList';
+import QuizView from './components/quiz-view/QuizView';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/home/*" element={<HomeScreen />}>
           <Route path="chats" element={<ChatPage />} />
+          <Route path="quiz-view" element={<QuizView />} />
           <Route path="quiz" element={<QuizGenerator />} />
           <Route
             index
